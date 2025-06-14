@@ -1,0 +1,2502 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/patients/": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "All Patients",
+        "operationId": "all_patients_patients__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SPatient"
+                  },
+                  "type": "array",
+                  "title": "Response All Patients Patients  Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Add Patient",
+        "operationId": "add_patient_patients__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SPatientAdd"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPatient"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/profile/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Get Patient",
+        "operationId": "get_patient_patients_profile__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPatient"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/login": {
+      "post": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Login User",
+        "operationId": "login_user_patients_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SPatientAuth"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/me": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Get Me",
+        "operationId": "get_me_patients_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPatient"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/hospitalizations/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Get All Hosp By Patient Id",
+        "operationId": "get_all_hosp_by_patient_id_patients_hospitalizations__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPatientHosp"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/upload_photo/{patient_id}": {
+      "post": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Upload Photo",
+        "description": "Добавить сохранение в s3 хранилище",
+        "operationId": "upload_photo_patients_upload_photo__patient_id__post",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_photo_patients_upload_photo__patient_id__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/qr_code/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Get Qr Code Patient",
+        "operationId": "get_qr_code_patient_patients_qr_code__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/qr_code": {
+      "post": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Recognition Qr Code Patient",
+        "operationId": "recognition_qr_code_patient_patients_qr_code_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_recognition_qr_code_patient_patients_qr_code_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/consent/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Consent",
+        "operationId": "consent_patients_consent__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/contract/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Contract",
+        "operationId": "contract_patients_contract__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctors/": {
+      "get": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Get All Doctors",
+        "operationId": "get_all_doctors_doctors__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SDoctor"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Doctors Doctors  Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Add Doctors",
+        "operationId": "add_doctors_doctors__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDoctorAdd"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctors/login": {
+      "post": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Login Doctor",
+        "operationId": "login_doctor_doctors_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDoctorAuth"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctors/me": {
+      "get": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Get Me Doc",
+        "operationId": "get_me_doc_doctors_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDoctor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/doctors/{doctor_id}": {
+      "get": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Get Current Doctor",
+        "operationId": "get_current_doctor_doctors__doctor_id__get",
+        "parameters": [
+          {
+            "name": "doctor_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Doctor Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SDoctor"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Get Current Doctor Doctors  Doctor Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitalizations/": {
+      "get": {
+        "tags": [
+          "hospitalizations"
+        ],
+        "summary": "Get Hospitalizations",
+        "operationId": "get_hospitalizations_hospitalizations__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SHospitalization"
+                  },
+                  "type": "array",
+                  "title": "Response Get Hospitalizations Hospitalizations  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitalizations/patient/{patient_id}": {
+      "post": {
+        "tags": [
+          "hospitalizations"
+        ],
+        "summary": "Add Hospitalization",
+        "operationId": "add_hospitalization_hospitalizations_patient__patient_id__post",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SHospitalizationAdd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitalizations/patients": {
+      "get": {
+        "tags": [
+          "hospitalizations"
+        ],
+        "summary": "Get Lst Hosp Full Info",
+        "operationId": "get_lst_hosp_full_info_hospitalizations_patients_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SHospitalizationFull"
+                  },
+                  "type": "array",
+                  "title": "Response Get Lst Hosp Full Info Hospitalizations Patients Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitalizations/patients/{hosp_id}": {
+      "get": {
+        "tags": [
+          "hospitalizations"
+        ],
+        "summary": "Get Patients Hosp",
+        "operationId": "get_patients_hosp_hospitalizations_patients__hosp_id__get",
+        "parameters": [
+          {
+            "name": "hosp_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Hosp Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SHospitalizationFull"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitalizations/{hosp_id}": {
+      "get": {
+        "tags": [
+          "hospitalizations"
+        ],
+        "summary": "Get Current Hosp",
+        "operationId": "get_current_hosp_hospitalizations__hosp_id__get",
+        "parameters": [
+          {
+            "name": "hosp_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Hosp Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SHospitalization"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Get Current Hosp Hospitalizations  Hosp Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get All Med Procedure",
+        "operationId": "get_all_med_procedure_med_procedure__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/patient/{patient_id}": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get All Med Procedure By Current Patient",
+        "operationId": "get_all_med_procedure_by_current_patient_med_procedure_patient__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SMedProcedureFull"
+                  },
+                  "title": "Response Get All Med Procedure By Current Patient Med Procedure Patient  Patient Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Add Med Procedure",
+        "operationId": "add_med_procedure_med_procedure_patient__patient_id__post",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SMedProcedureAdd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/cabinets": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get All Cabinets",
+        "operationId": "get_all_cabinets_med_procedure_cabinets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SCabinet"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Cabinets Med Procedure Cabinets Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/{med_procedures_id}": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get Med Procedures",
+        "operationId": "get_med_procedures_med_procedure__med_procedures_id__get",
+        "parameters": [
+          {
+            "name": "med_procedures_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedures Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Info Page",
+        "operationId": "info_page_pages__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/login/patient": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Login Patient Page",
+        "operationId": "login_patient_page_pages_login_patient_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/patients/profile": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Current Patient Page",
+        "operationId": "current_patient_page_pages_patients_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/patients": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Patients Page",
+        "operationId": "patients_page_pages_patients_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/patients/add": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Patients Add Page",
+        "operationId": "patients_add_page_pages_patients_add_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/patients/{patient_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Current Patient Page",
+        "operationId": "current_patient_page_pages_patients__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/login/doctor": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Login Doctor Page",
+        "operationId": "login_doctor_page_pages_login_doctor_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/doctors/profile": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Doctor Profile Page",
+        "operationId": "doctor_profile_page_pages_doctors_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/doctors/{doctor_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Current Doctor Page",
+        "operationId": "current_doctor_page_pages_doctors__doctor_id__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/hospitalizations": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Hospitalizations Page",
+        "operationId": "hospitalizations_page_pages_hospitalizations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/hospitalizations/patient/{patient_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Hospitalizations Current Patient Page",
+        "operationId": "hospitalizations_current_patient_page_pages_hospitalizations_patient__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/hospitalizations/add/{patient_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Add Hospitalizations Page",
+        "operationId": "add_hospitalizations_page_pages_hospitalizations_add__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/hospitalizations/{hosp_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Hospitalizations Page",
+        "operationId": "hospitalizations_page_pages_hospitalizations__hosp_id__get",
+        "parameters": [
+          {
+            "name": "hosp_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Hosp Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/med_procedures": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Med Procedures Page",
+        "operationId": "med_procedures_page_pages_med_procedures_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/med_procedures/patient/{patient_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Med Procedures Current Patient Page",
+        "operationId": "med_procedures_current_patient_page_pages_med_procedures_patient__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/med_procedures/add/{patient_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Med Procedures Page",
+        "operationId": "med_procedures_page_pages_med_procedures_add__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/med_procedures/{med_procedures_id}": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Med Procedures Page",
+        "operationId": "med_procedures_page_pages_med_procedures__med_procedures_id__get",
+        "parameters": [
+          {
+            "name": "med_procedures_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedures Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Hello",
+        "operationId": "hello__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_recognition_qr_code_patient_patients_qr_code_post": {
+        "properties": {
+          "uploaded_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Uploaded File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uploaded_file"
+        ],
+        "title": "Body_recognition_qr_code_patient_patients_qr_code_post"
+      },
+      "Body_upload_photo_patients_upload_photo__patient_id__post": {
+        "properties": {
+          "uploaded_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Uploaded File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uploaded_file"
+        ],
+        "title": "Body_upload_photo_patients_upload_photo__patient_id__post"
+      },
+      "CorrectGender": {
+        "type": "string",
+        "enum": [
+          "man",
+          "woman"
+        ],
+        "title": "CorrectGender"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "SCabinet": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "number_cabinet": {
+            "type": "integer",
+            "title": "Number Cabinet"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "number_cabinet",
+          "name"
+        ],
+        "title": "SCabinet"
+      },
+      "SDoctor": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "middle_name": {
+            "type": "string",
+            "title": "Middle Name"
+          },
+          "specialty": {
+            "type": "string",
+            "title": "Specialty"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "middle_name",
+          "specialty",
+          "email"
+        ],
+        "title": "SDoctor"
+      },
+      "SDoctorAdd": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "middle_name": {
+            "type": "string",
+            "title": "Middle Name"
+          },
+          "specialty": {
+            "type": "string",
+            "title": "Specialty"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "middle_name",
+          "specialty",
+          "email",
+          "password"
+        ],
+        "title": "SDoctorAdd"
+      },
+      "SDoctorAuth": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "SDoctorAuth"
+      },
+      "SHosp": {
+        "properties": {
+          "patient_id": {
+            "type": "integer",
+            "title": "Patient Id"
+          },
+          "doctor_id": {
+            "type": "integer",
+            "title": "Doctor Id"
+          },
+          "department": {
+            "type": "string",
+            "title": "Department"
+          },
+          "purpose": {
+            "type": "string",
+            "title": "Purpose"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date"
+          },
+          "is_paid": {
+            "type": "boolean",
+            "title": "Is Paid"
+          },
+          "refusal_patient": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Patient"
+          },
+          "refusal_doctor": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Doctor"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_id",
+          "doctor_id",
+          "department",
+          "purpose",
+          "start_date",
+          "end_date",
+          "is_paid",
+          "refusal_patient",
+          "refusal_doctor",
+          "cancel_reason"
+        ],
+        "title": "SHosp"
+      },
+      "SHospitalization": {
+        "properties": {
+          "patient_id": {
+            "type": "integer",
+            "title": "Patient Id"
+          },
+          "doctor_id": {
+            "type": "integer",
+            "title": "Doctor Id"
+          },
+          "department": {
+            "type": "string",
+            "title": "Department"
+          },
+          "purpose": {
+            "type": "string",
+            "title": "Purpose"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date"
+          },
+          "is_paid": {
+            "type": "boolean",
+            "title": "Is Paid"
+          },
+          "refusal_patient": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Patient"
+          },
+          "refusal_doctor": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Doctor"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_id",
+          "doctor_id",
+          "department",
+          "purpose",
+          "start_date",
+          "end_date",
+          "is_paid",
+          "refusal_patient",
+          "refusal_doctor",
+          "cancel_reason"
+        ],
+        "title": "SHospitalization"
+      },
+      "SHospitalizationAdd": {
+        "properties": {
+          "department": {
+            "type": "string",
+            "title": "Department"
+          },
+          "purpose": {
+            "type": "string",
+            "title": "Purpose"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date"
+          },
+          "is_paid": {
+            "type": "boolean",
+            "title": "Is Paid"
+          },
+          "refusal_patient": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Patient"
+          },
+          "refusal_doctor": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Doctor"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "department",
+          "purpose",
+          "start_date",
+          "end_date",
+          "is_paid",
+          "refusal_patient",
+          "refusal_doctor",
+          "cancel_reason"
+        ],
+        "title": "SHospitalizationAdd"
+      },
+      "SHospitalizationFull": {
+        "properties": {
+          "patient_id": {
+            "type": "integer",
+            "title": "Patient Id"
+          },
+          "doctor_id": {
+            "type": "integer",
+            "title": "Doctor Id"
+          },
+          "department": {
+            "type": "string",
+            "title": "Department"
+          },
+          "purpose": {
+            "type": "string",
+            "title": "Purpose"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date"
+          },
+          "is_paid": {
+            "type": "boolean",
+            "title": "Is Paid"
+          },
+          "refusal_patient": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Patient"
+          },
+          "refusal_doctor": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Refusal Doctor"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          },
+          "patients": {
+            "$ref": "#/components/schemas/SPatient"
+          },
+          "doctors": {
+            "$ref": "#/components/schemas/SDoctor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_id",
+          "doctor_id",
+          "department",
+          "purpose",
+          "start_date",
+          "end_date",
+          "is_paid",
+          "refusal_patient",
+          "refusal_doctor",
+          "cancel_reason",
+          "patients",
+          "doctors"
+        ],
+        "title": "SHospitalizationFull"
+      },
+      "SMedProcedureAdd": {
+        "properties": {
+          "cabinet_id": {
+            "type": "integer",
+            "title": "Cabinet Id"
+          },
+          "datetime_measures": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Datetime Measures"
+          },
+          "type_procedure": {
+            "$ref": "#/components/schemas/TypeProcedure"
+          },
+          "name_measures": {
+            "type": "string",
+            "title": "Name Measures"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          },
+          "recommendations": {
+            "type": "string",
+            "title": "Recommendations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "cabinet_id",
+          "datetime_measures",
+          "type_procedure",
+          "name_measures",
+          "result",
+          "recommendations"
+        ],
+        "title": "SMedProcedureAdd"
+      },
+      "SMedProcedureFull": {
+        "properties": {
+          "patient_id": {
+            "type": "integer",
+            "title": "Patient Id"
+          },
+          "doctor_id": {
+            "type": "integer",
+            "title": "Doctor Id"
+          },
+          "cabinet_id": {
+            "type": "integer",
+            "title": "Cabinet Id"
+          },
+          "datetime_measures": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Datetime Measures"
+          },
+          "type_procedure": {
+            "$ref": "#/components/schemas/TypeProcedure"
+          },
+          "name_measures": {
+            "type": "string",
+            "title": "Name Measures"
+          },
+          "result": {
+            "type": "string",
+            "title": "Result"
+          },
+          "recommendations": {
+            "type": "string",
+            "title": "Recommendations"
+          },
+          "patients": {
+            "$ref": "#/components/schemas/SPatient"
+          },
+          "doctors": {
+            "$ref": "#/components/schemas/SDoctor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_id",
+          "doctor_id",
+          "cabinet_id",
+          "datetime_measures",
+          "type_procedure",
+          "name_measures",
+          "result",
+          "recommendations",
+          "patients",
+          "doctors"
+        ],
+        "title": "SMedProcedureFull"
+      },
+      "SPatient": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "middle_name": {
+            "type": "string",
+            "title": "Middle Name"
+          },
+          "date_birthday": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Birthday"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/CorrectGender"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "date_issue": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Issue"
+          },
+          "date_last_request": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Last Request"
+          },
+          "date_next_visit": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Next Visit"
+          },
+          "number_insurance_policy": {
+            "type": "string",
+            "title": "Number Insurance Policy"
+          },
+          "date_expiration": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Expiration"
+          },
+          "diagnosis": {
+            "type": "string",
+            "title": "Diagnosis"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
+          },
+          "qr_code_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qr Code Url"
+          },
+          "insurance_company": {
+            "type": "string",
+            "title": "Insurance Company"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "middle_name",
+          "date_birthday",
+          "gender",
+          "address",
+          "phone_number",
+          "email",
+          "date_issue",
+          "date_last_request",
+          "date_next_visit",
+          "number_insurance_policy",
+          "date_expiration",
+          "diagnosis",
+          "photo_url",
+          "qr_code_url",
+          "insurance_company"
+        ],
+        "title": "SPatient"
+      },
+      "SPatientAdd": {
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "middle_name": {
+            "type": "string",
+            "title": "Middle Name"
+          },
+          "date_birthday": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Birthday"
+          },
+          "passport": {
+            "type": "string",
+            "title": "Passport"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/CorrectGender"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "date_issue": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Issue"
+          },
+          "date_last_request": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Last Request"
+          },
+          "date_next_visit": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Next Visit"
+          },
+          "number_insurance_policy": {
+            "type": "string",
+            "title": "Number Insurance Policy"
+          },
+          "date_expiration": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Expiration"
+          },
+          "diagnosis": {
+            "type": "string",
+            "title": "Diagnosis"
+          },
+          "insurance_company": {
+            "type": "string",
+            "title": "Insurance Company"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_name",
+          "last_name",
+          "middle_name",
+          "date_birthday",
+          "passport",
+          "gender",
+          "address",
+          "phone_number",
+          "email",
+          "date_issue",
+          "date_last_request",
+          "date_next_visit",
+          "number_insurance_policy",
+          "date_expiration",
+          "diagnosis",
+          "insurance_company",
+          "password"
+        ],
+        "title": "SPatientAdd"
+      },
+      "SPatientAuth": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "SPatientAuth"
+      },
+      "SPatientHosp": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name"
+          },
+          "middle_name": {
+            "type": "string",
+            "title": "Middle Name"
+          },
+          "date_birthday": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Birthday"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/CorrectGender"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "date_issue": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Issue"
+          },
+          "date_last_request": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Last Request"
+          },
+          "date_next_visit": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Date Next Visit"
+          },
+          "number_insurance_policy": {
+            "type": "string",
+            "title": "Number Insurance Policy"
+          },
+          "date_expiration": {
+            "type": "string",
+            "format": "date",
+            "title": "Date Expiration"
+          },
+          "diagnosis": {
+            "type": "string",
+            "title": "Diagnosis"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
+          },
+          "qr_code_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qr Code Url"
+          },
+          "insurance_company": {
+            "type": "string",
+            "title": "Insurance Company"
+          },
+          "hospitalizations": {
+            "items": {
+              "$ref": "#/components/schemas/SHosp"
+            },
+            "type": "array",
+            "title": "Hospitalizations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "middle_name",
+          "date_birthday",
+          "gender",
+          "address",
+          "phone_number",
+          "email",
+          "date_issue",
+          "date_last_request",
+          "date_next_visit",
+          "number_insurance_policy",
+          "date_expiration",
+          "diagnosis",
+          "photo_url",
+          "qr_code_url",
+          "insurance_company",
+          "hospitalizations"
+        ],
+        "title": "SPatientHosp"
+      },
+      "TypeProcedure": {
+        "type": "string",
+        "enum": [
+          "лабораторное исследование",
+          "инструментальная диагностика",
+          "лекарственная терапия",
+          "физиотерапия",
+          "хирургическое лечение"
+        ],
+        "title": "TypeProcedure"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
