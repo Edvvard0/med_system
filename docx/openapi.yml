@@ -6,29 +6,6 @@
   },
   "paths": {
     "/patients/": {
-      "get": {
-        "tags": [
-          "patients"
-        ],
-        "summary": "All Patients",
-        "operationId": "all_patients_patients__get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/SPatient"
-                  },
-                  "type": "array",
-                  "title": "Response All Patients Patients  Get"
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "patients"
@@ -62,6 +39,31 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/all": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "All Patients",
+        "operationId": "all_patients_patients_all_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SPatient"
+                  },
+                  "type": "array",
+                  "title": "Response All Patients Patients All Get"
                 }
               }
             }
@@ -166,6 +168,48 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SPatient"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/patients/download/{patient_id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Get Patient Med Card",
+        "operationId": "get_patient_med_card_patients_download__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -922,6 +966,48 @@
         }
       }
     },
+    "/med_procedure/patient_info/{patient_id}": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Med Procedure By Current Patient",
+        "operationId": "med_procedure_by_current_patient_med_procedure_patient_info__patient_id__get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/med_procedure/cabinets": {
       "get": {
         "tags": [
@@ -965,6 +1051,316 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/upload_file/{med_procedure_id}": {
+      "post": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Upload File Med Procedure",
+        "operationId": "upload_file_med_procedure_med_procedure_upload_file__med_procedure_id__post",
+        "parameters": [
+          {
+            "name": "med_procedures_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedures Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_file_med_procedure_med_procedure_upload_file__med_procedure_id__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/upload_voice_comments/{med_procedure_id}": {
+      "post": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Upload Voice Comments",
+        "operationId": "upload_voice_comments_med_procedure_upload_voice_comments__med_procedure_id__post",
+        "parameters": [
+          {
+            "name": "med_procedures_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedures Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_voice_comments_med_procedure_upload_voice_comments__med_procedure_id__post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/voice_comments/{med_procedure_id}": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get Voice Message",
+        "operationId": "get_voice_message_med_procedure_voice_comments__med_procedure_id__get",
+        "parameters": [
+          {
+            "name": "med_procedure_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedure Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/med_procedure/file/{med_procedure_id}": {
+      "get": {
+        "tags": [
+          "med_procedure"
+        ],
+        "summary": "Get Voice Message",
+        "operationId": "get_voice_message_med_procedure_file__med_procedure_id__get",
+        "parameters": [
+          {
+            "name": "med_procedure_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Med Procedure Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location/": {
+      "get": {
+        "tags": [
+          "Location"
+        ],
+        "summary": "Get Hosp Cabinet Page",
+        "operationId": "get_hosp_cabinet_page_location__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location/rooms": {
+      "get": {
+        "tags": [
+          "Location"
+        ],
+        "summary": "Get Rooms",
+        "operationId": "get_rooms_location_rooms_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location/rooms/patient": {
+      "post": {
+        "tags": [
+          "Location"
+        ],
+        "summary": "Add Patient In Room",
+        "operationId": "add_patient_in_room_location_rooms_patient_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SRoomHospitalAdd"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Location"
+        ],
+        "summary": "Add Patient In Room",
+        "operationId": "add_patient_in_room_location_rooms_patient_delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SRoomHospitalAdd"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1493,6 +1889,48 @@
         }
       }
     },
+    "/pages/graph": {
+      "get": {
+        "tags": [
+          "Pages"
+        ],
+        "summary": "Graph Page",
+        "operationId": "graph_page_pages_graph_get",
+        "parameters": [
+          {
+            "name": "patient_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Patient Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "summary": "Hello",
@@ -1528,6 +1966,20 @@
         ],
         "title": "Body_recognition_qr_code_patient_patients_qr_code_post"
       },
+      "Body_upload_file_med_procedure_med_procedure_upload_file__med_procedure_id__post": {
+        "properties": {
+          "uploaded_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Uploaded File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uploaded_file"
+        ],
+        "title": "Body_upload_file_med_procedure_med_procedure_upload_file__med_procedure_id__post"
+      },
       "Body_upload_photo_patients_upload_photo__patient_id__post": {
         "properties": {
           "uploaded_file": {
@@ -1541,6 +1993,20 @@
           "uploaded_file"
         ],
         "title": "Body_upload_photo_patients_upload_photo__patient_id__post"
+      },
+      "Body_upload_voice_comments_med_procedure_upload_voice_comments__med_procedure_id__post": {
+        "properties": {
+          "uploaded_file": {
+            "type": "string",
+            "format": "binary",
+            "title": "Uploaded File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uploaded_file"
+        ],
+        "title": "Body_upload_voice_comments_med_procedure_upload_voice_comments__med_procedure_id__post"
       },
       "CorrectGender": {
         "type": "string",
@@ -1864,6 +2330,10 @@
             "type": "boolean",
             "title": "Is Paid"
           },
+          "room_id": {
+            "type": "integer",
+            "title": "Room Id"
+          },
           "refusal_patient": {
             "anyOf": [
               {
@@ -1905,6 +2375,7 @@
           "start_date",
           "end_date",
           "is_paid",
+          "room_id",
           "refusal_patient",
           "refusal_doctor",
           "cancel_reason"
@@ -2072,6 +2543,28 @@
             "type": "string",
             "title": "Recommendations"
           },
+          "voice_comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voice Comment"
+          },
+          "file_med_procedure": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Med Procedure"
+          },
           "patients": {
             "$ref": "#/components/schemas/SPatient"
           },
@@ -2089,6 +2582,8 @@
           "name_measures",
           "result",
           "recommendations",
+          "voice_comment",
+          "file_med_procedure",
           "patients",
           "doctors"
         ],
@@ -2452,6 +2947,24 @@
           "hospitalizations"
         ],
         "title": "SPatientHosp"
+      },
+      "SRoomHospitalAdd": {
+        "properties": {
+          "room_id": {
+            "type": "integer",
+            "title": "Room Id"
+          },
+          "patient_id": {
+            "type": "integer",
+            "title": "Patient Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "room_id",
+          "patient_id"
+        ],
+        "title": "SRoomHospitalAdd"
       },
       "TypeProcedure": {
         "type": "string",

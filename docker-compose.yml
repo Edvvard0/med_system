@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: med_services_app
+    restart: unless-stopped
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6380
+      - REDIS_DB=0
+      - REDIS_USER=my_user
+      - REDIS_PASSWORD=my_user_password
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - ./med_services:/med_services
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    restart: unless-stopped
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-my_user_password}
+      - REDIS_USER=${REDIS_USER:-my_user}
+      - REDIS_PORT=6380
+    ports:
+      - "6380:6380"  # Изменен порт на 6380, как указано в вашем коде
+    volumes:
+      - ./redisdata:/data
+    command: redis-server --requirepass ${REDIS_PASSWORD} --port 6380
+
+volumes:
+  redisdata:
