@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Список пациентов
+{% endblock %}
+
+{% block head %}
+<style>
+    .patients-list {
+        max-width: 1000px;
+        margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .patient-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+    .patient-card:hover {
+        transform: scale(1.05);
+        background-color: #f0f4f8; /* Светло-голубой при наведении */
+    }
+    .patient-card h3 {
+        color: #007bff;
+        margin: 0 0 10px 0;
+    }
+    .patient-card p {
+        margin: 5px 0;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="patients-list">
+    {% for patient in patients %}
+        <div class="patient-card" onclick="window.location.href='/pages/patients/{{ patient.id }}'">
+            <h3>{{ patient.first_name }} {{ patient.last_name }} {{ patient.middle_name }}</h3>
+            <p>Дата рождения: {{ patient.date_birthday.strftime('%d.%m.%Y') }}</p>
+            <p>Диагноз: {{ patient.diagnosis if patient.diagnosis else 'Не установлен' }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

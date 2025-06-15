@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+Детали лечебно-профилактического мероприятия
+{% endblock %}
+
+{% block head %}
+<style>
+    .treatment-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .treatment-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .person-info {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .person-info h3 {
+        color: #007bff;
+        margin: 5px 0;
+    }
+    .treatment-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .treatment-details p {
+        margin: 5px 0;
+        color: #333;
+    }
+    .treatment-details .label {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="treatment-container">
+    <h1>Детали лечебно-профилактического мероприятия</h1>
+
+    <!-- Информация о пациенте -->
+    <div class="person-info">
+        <h3>Пациент</h3>
+        <p>{{ med_procedure.patients.first_name }} {{ med_procedure.patients.last_name }} {{ med_procedure.patients.middle_name }}</p>
+    </div>
+
+    <!-- Информация о докторе -->
+    <div class="person-info">
+        <h3>Доктор</h3>
+        <p>{{ med_procedure.doctors.first_name }} {{ med_procedure.doctors.last_name }} {{ med_procedure.doctors.middle_name }}</p>
+    </div>
+
+    <!-- Детали мероприятия -->
+    <div class="treatment-details">
+        <p><span class="label">Номер кабинета:</span> {{ med_procedure.cabinet.number_cabinet }}</p>
+        <p><span class="label">Название кабинета:</span> {{ med_procedure.cabinet.name }}</p>
+        <p><span class="label">Диагноз пациента:</span> {{ med_procedure.patients.diagnosis if med_procedure.patients.diagnosis else 'Не установлен' }}</p>
+        <p><span class="label">Тип процедуры:</span> {{ med_procedure.type_procedure }}</p>
+        <p><span class="label">Название мероприятия:</span> {{ med_procedure.name_measures }}</p>
+        <p><span class="label">Результат:</span> {{ med_procedure.result if med_procedure.result else 'Не указан' }}</p>
+        <p><span class="label">Рекомендации:</span> {{ med_procedure.recommendations if med_procedure.recommendations else 'Не указаны' }}</p>
+    </div>
+</div>
+{% endblock %}

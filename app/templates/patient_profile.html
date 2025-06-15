@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Информация о пациенте
+{% endblock %}
+
+{% block head %}
+<style>
+    .patient-info {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 20px auto;
+    }
+    .patient-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .patient-header h2 {
+        color: #007bff;
+        margin: 0;
+    }
+    .patient-details, .contact-info {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .medical-card {
+        background-color: #f0f4f8;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .medical-card img {
+        max-width: 150px;
+        border-radius: 10%;
+        margin: 10px 0;
+    }
+    .medical-card p {
+        margin: 10px 0;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    .buttons button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .buttons button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="patient-info">
+    <!-- ФИО и дата рождения -->
+    <div class="patient-header">
+        <h2>{{ patient.first_name }} {{ patient.last_name }} {{ patient.middle_name }}</h2>
+        <p>Дата рождения: {{ patient.date_birthday.strftime('%d.%m.%Y') }}</p>
+    </div>
+
+    <!-- Пол и адрес -->
+    <div class="patient-details">
+        <p>Пол: {{ patient.gender.value }}</p>
+        <p>Адрес: {{ patient.address }}</p>
+    </div>
+
+    <!-- Контактная информация -->
+    <div class="contact-info">
+        <p>Телефон: {{ patient.phone_number }}</p>
+        <p>Email: {{ patient.email }}</p>
+    </div>
+
+    <!-- Медицинская карта -->
+    <div class="medical-card">
+        <h3>Медицинская карта</h3>
+        <p>Номер карты: {{ patient.med_card_id }}</p>
+        <p>Дата создания: {{ patient.date_issue.strftime('%d.%m.%Y') if patient.date_issue else 'Не указана' }}</p>
+        <p>Последнее посещение: {{ patient.date_last_request.strftime('%d.%m.%Y %H:%M') if patient.date_last_request else 'Нет данных' }}</p>
+        <p>Следующее посещение: {{ patient.date_next_visit.strftime('%d.%m.%Y %H:%M') if patient.date_next_visit else 'Не назначено' }}</p>
+        <p>Страховая компания: {{ patient.insurance_company if patient.insurance_company else 'Не указана' }}</p>
+        <p>Диагноз: {{ patient.diagnosis if patient.diagnosis else 'Не установлен' }}</p>
+        {% if patient.photo_url %}
+            <img src="{{ patient.photo_url[3:] }}" alt="Фото пациента">
+        {% else %}
+            <p>Фото отсутствует</p>
+        {% endif %}
+        {% if patient.photo_url %}
+            <img src="{{ patient.qr_code_url[3:] }}" alt="QR пациента">
+        {% else %}
+            <p>QR код отсутствует</p>
+        {% endif %}
+    </div>
+
+    <!-- Кнопки -->
+    <div class="buttons">
+        <button onclick="window.location.href='/pages/med_procedures/patient/{{ patient.id }}'">Лечебно-профилактические мероприятия</button>
+        <button onclick="window.location.href='/pages/hospitalizations/patient/{{ patient.id }}'">Госпитализация</button>
+    </div>
+
+    {% if role == "doctor" %}
+    <br>
+    <div class="buttons">
+        <button onclick="window.location.href='/pages/med_procedures/add/{{ patient.id }}'">
+            Добавить лечебно-профилактическое мероприятие</button>
+        <button onclick="window.location.href='/pages/hospitalizations/add/{{ patient.id }}'">Добавить госпитализацию</button>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

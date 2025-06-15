@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}
+Добавить госпитализацию
+{% endblock %}
+
+{% block head %}
+<style>
+    .add-hosp-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .add-hosp-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    .form-grid label {
+        display: block;
+        margin-bottom: 5px;
+        color: #007bff;
+        font-weight: bold;
+    }
+    .form-grid input, .form-grid select, .form-grid textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-grid textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    .form-grid .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .submit-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="add-hosp-container">
+    <h1>Добавить госпитализацию</h1>
+    <form id="addHospForm">
+        <div class="form-grid">
+            <div>
+                <label for="room_id">ID комнаты:</label>
+                <input type="number" id="room_id" name="room_id" min="1" required>
+            </div>
+            <div>
+                <label for="department">Отделение:</label>
+                <input type="text" id="department" name="department" required>
+            </div>
+            <div>
+                <label for="purpose">Цель госпитализации:</label>
+                <input type="text" id="purpose" name="purpose" required>
+            </div>
+            <div>
+                <label for="start_date">Дата начала:</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+            <div>
+                <label for="end_date">Дата окончания:</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+            <div class="checkbox-group">
+                <label for="is_paid">Платная госпитализация:</label>
+                <input type="checkbox" id="is_paid" name="is_paid">
+            </div>
+            <div class="checkbox-group">
+                <label for="refusal_patient">Отказ пациента:</label>
+                <input type="checkbox" id="refusal_patient" name="refusal_patient">
+            </div>
+            <div class="checkbox-group">
+                <label for="refusal_doctor">Отказ врача:</label>
+                <input type="checkbox" id="refusal_doctor" name="refusal_doctor">
+            </div>
+            <div>
+                <label for="cancel_reason">Причина отмены:</label>
+                <textarea id="cancel_reason" name="cancel_reason"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="submit-button">Добавить</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Получаем patient_id из пути (например, /pages/hospitalization/add/{patient_id})
+    const patientId = window.location.pathname.split('/').pop();
+
+    // Обработка отправки формы
+    document.getElementById('addHospForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const hospData = {
+            room_id: parseInt(formData.get('room_id')),
+            department: formData.get('department'),
+            purpose: formData.get('purpose'),
+            start_date: formData.get('start_date'),
+            end_date: formData.get('end_date'),
+            is_paid: formData.get('is_paid') === 'on',
+            refusal_patient: formData.get('refusal_patient') === 'on' || null,
+            refusal_doctor: formData.get('refusal_doctor') === 'on' || null,
+            cancel_reason: formData.get('cancel_reason') || null
+        };
+
+        try {
+            const response = await fetch(`/hospitalizations/patient/${patientId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(hospData)
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Ошибка при добавлении госпитализации');
+            }
+
+            alert('Госпитализация успешно добавлена!');
+            window.location.href = `/pages/patients/${patientId}`; // Перенаправление
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}

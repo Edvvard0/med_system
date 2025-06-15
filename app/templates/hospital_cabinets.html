@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>План этажа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            width: 1400px;
+        }
+        .corridor {
+            height: 60px;
+            background-color: #d3d3d3;
+            margin: 15px 0;
+            position: relative;
+            width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .corridor-label {
+            background-color: #a9a9a9;
+            color: #fff;
+            padding: 8px;
+            font-size: 16px;
+        }
+        .room {
+            background-color: #f5f5dc;
+            border: 1px solid #000;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            margin: 0 5px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .room.small {
+            width: 100px;
+        }
+        .room.medium {
+            width: 200px;
+        }
+        .room.large {
+            width: 250px;
+        }
+        .room.default {
+            width: 150px;
+        }
+        .room-stats {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+        .room-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.2;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        .room-number {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Row -->
+        <div class="row">
+            <!-- Стерилизационная (17) -->
+            <div class="room small">
+                <div class="room-title">Стерилизационная</div>
+                <div class="room-number">17</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-17">{{ personal[17].CountDoctors if personal[17] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-17">{{ personal[17].CountPatients if personal[17] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Архив (18) -->
+            <div class="room small">
+                <div class="room-title">Архив</div>
+                <div class="room-number">18</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-18">{{ personal[18].CountDoctors if personal[18] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-18">{{ personal[18].CountPatients if personal[18] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Главный врач (19) -->
+            <div class="room default">
+                <div class="room-title">Главный врач</div>
+                <div class="room-number">19</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-19">{{ personal[19].CountDoctors if personal[19] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-19">{{ personal[19].CountPatients if personal[19] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Комната приёма пищи (20) -->
+            <div class="room small">
+                <div class="room-title">Комната приёма пищи</div>
+                <div class="room-number">20</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-20">{{ personal[20].CountDoctors if personal[20] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-20">{{ personal[20].CountPatients if personal[20] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Терапевтический кабинет (21) -->
+            <div class="room medium">
+                <div class="room-title">Терапевтический кабинет</div>
+                <div class="room-number">21</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-21">{{ personal[21].CountDoctors if personal[21] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-21">{{ personal[21].CountPatients if personal[21] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Санитарная комната (22) -->
+            <div class="room small">
+                <div class="room-title">Санитарная комната</div>
+                <div class="room-number">22</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-22">{{ personal[22].CountDoctors if personal[22] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-22">{{ personal[22].CountPatients if personal[22] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Общий туалет (23) -->
+            <div class="room small">
+                <div class="room-title">Общий туалет</div>
+                <div class="room-number">23</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-23">{{ personal[23].CountDoctors if personal[23] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-23">{{ personal[23].CountPatients if personal[23] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Зона комфортного ожидания (0) -->
+            <div class="room default">
+                <div class="room-title">Зона комфортного ожидания</div>
+                <div class="room-number">0</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-0">{{ personal[0].CountDoctors if personal[0] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-0">{{ personal[0].CountPatients if personal[0] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Регистратура (1) -->
+            <div class="room default">
+                <div class="room-title">Регистратура</div>
+                <div class="room-number">1</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-1">{{ personal[1].CountDoctors if personal[1] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-1">{{ personal[1].CountPatients if personal[1] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Комната утил. мед. отходов (2) -->
+            <div class="room small">
+                <div class="room-title">Комната утил. мед. отходов</div>
+                <div class="room-number">2</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-2">{{ personal[2].CountDoctors if personal[2] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-2">{{ personal[2].CountPatients if personal[2] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Служебный туалет (3) -->
+            <div class="room small">
+                <div class="room-title">Служебный туалет</div>
+                <div class="room-number">3</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-3">{{ personal[3].CountDoctors if personal[3] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-3">{{ personal[3].CountPatients if personal[3] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Заведующая отделением (4) -->
+            <div class="room small">
+                <div class="room-title">Заведующая отделением</div>
+                <div class="room-number">4</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-4">{{ personal[4].CountDoctors if personal[4] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-4">{{ personal[4].CountPatients if personal[4] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Главная мед сестра (5) -->
+            <div class="room small">
+                <div class="room-title">Главная мед сестра</div>
+                <div class="room-number">5</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-5">{{ personal[5].CountDoctors if personal[5] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-5">{{ personal[5].CountPatients if personal[5] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Кабинет гигиены полости рта (6) -->
+            <div class="room small">
+                <div class="room-title">Кабинет гигиены полости рта</div>
+                <div class="room-number">6</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-6">{{ personal[6].CountDoctors if personal[6] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-6">{{ personal[6].CountPatients if personal[6] else 'Нет данных' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Corridor -->
+        <div class="corridor">
+            <div class="corridor-label">Зона здесь входа</div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="row">
+            <!-- Заведующая хоз (16) -->
+            <div class="room small">
+                <div class="room-title">Заведующая хоз</div>
+                <div class="room-number">16</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-16">{{ personal[16].CountDoctors if personal[16] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-16">{{ personal[16].CountPatients if personal[16] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Стоматологический кабинет (15) -->
+            <div class="room small">
+                <div class="room-title">Стоматологический кабинет</div>
+                <div class="room-number">15</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-15">{{ personal[15].CountDoctors if personal[15] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-15">{{ personal[15].CountPatients if personal[15] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Физио-терапевтический кабинет (14) -->
+            <div class="room default">
+                <div class="room-title">Физио-терапевтический кабинет</div>
+                <div class="room-number">14</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-14">{{ personal[14].CountDoctors if personal[14] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-14">{{ personal[14].CountPatients if personal[14] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Экономисты (13) -->
+            <div class="room small">
+                <div class="room-title">Экономисты</div>
+                <div class="room-number">13</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-13">{{ personal[13].CountDoctors if personal[13] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-13">{{ personal[13].CountPatients if personal[13] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Хирургический кабинет (12) -->
+            <div class="room small">
+                <div class="room-title">Хирургический кабинет</div>
+                <div class="room-number">12</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-12">{{ personal[12].CountDoctors if personal[12] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-12">{{ personal[12].CountPatients if personal[12] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Бухгалтерия (11) -->
+            <div class="room small">
+                <div class="room-title">Бухгалтерия</div>
+                <div class="room-number">11</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-11">{{ personal[11].CountDoctors if personal[11] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-11">{{ personal[11].CountPatients if personal[11] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Гардеробная персонала (10) -->
+            <div class="room small">
+                <div class="room-title">Гардеробная персонала</div>
+                <div class="room-number">10</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-10">{{ personal[10].CountDoctors if personal[10] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-10">{{ personal[10].CountPatients if personal[10] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Компьютерная (9) -->
+            <div class="room small">
+                <div class="room-title">Компьютерная</div>
+                <div class="room-number">9</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-9">{{ personal[9].CountDoctors if personal[9] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-9">{{ personal[9].CountPatients if personal[9] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Терапевтический кабинет (8) -->
+            <div class="room default">
+                <div class="room-title">Терапевтический кабинет</div>
+                <div class="room-number">8</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-8">{{ personal[8].CountDoctors if personal[8] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-8">{{ personal[8].CountPatients if personal[8] else 'Нет данных' }}</span>
+                </div>
+            </div>
+            <!-- Терапевтический кабинет (7) -->
+            <div class="room default">
+                <div class="room-title">Терапевтический кабинет</div>
+                <div class="room-number">7</div>
+                <div class="room-stats">
+                    Врачей: <span id="doctors-7">{{ personal[7].CountDoctors if personal[7] else 'Нет данных' }}</span><br>
+                    Пациентов: <span id="patients-7">{{ personal[7].CountPatients if personal[7] else 'Нет данных' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+Детали госпитализации
+{% endblock %}
+
+{% block head %}
+<style>
+    .hospitalization-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .hospitalization-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .hospitalization-id {
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .hospitalization-id .label {
+        font-weight: bold;
+        color: #007bff;
+    }
+    .person-info {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .person-info h3 {
+        color: #007bff;
+        margin: 5px 0;
+    }
+    .hospitalization-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .column p {
+        margin: 0;
+        color: #333;
+    }
+    .column .label {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hospitalization-container">
+    <h1>Детали госпитализации</h1>
+    <div class="hospitalization-id">
+        <p><span class="label">ID госпитализации:</span> {{ hospitalization.id }}</p>
+    </div>
+
+    <!-- Информация о пациенте -->
+    <div class="person-info">
+        <h3>Пациент</h3>
+        <p>{{ hospitalization.patients.first_name }} {{ hospitalization.patients.last_name }} {{ hospitalization.patients.middle_name }}</p>
+    </div>
+
+    <!-- Информация о докторе -->
+    <div class="person-info">
+        <h3>Доктор</h3>
+        <p>{{ hospitalization.doctors.first_name }} {{ hospitalization.doctors.last_name }} {{ hospitalization.doctors.middle_name }}</p>
+    </div>
+
+    <!-- Детали госпитализации в двух столбцах -->
+    <div class="hospitalization-details">
+        <!-- Первый столбец -->
+        <div class="column">
+            <p><span class="label">Дата начала:</span> {{ hospitalization.start_date.strftime('%d.%m.%Y') }}</p>
+            <p><span class="label">Дата окончания:</span> {{ hospitalization.end_date.strftime('%d.%m.%Y') }}</p>
+            <p><span class="label">Диагноз:</span> {{ hospitalization.patients.diagnosis if hospitalization.patients.diagnosis else 'Не установлен' }}</p>
+        </div>
+        <!-- Второй столбец -->
+        <div class="column">
+            <p><span class="label">Платно/Бюджетно:</span> {{ 'Платно' if hospitalization.is_paid else 'Бюджетно' }}</p>
+            <p><span class="label">Отказ пациента:</span> {{ 'Да' if hospitalization.refusal_patient else 'Нет' }}</p>
+            <p><span class="label">Отказ доктора:</span> {{ 'Да' if hospitalization.refusal_doctor else 'Нет' }}</p>
+            <p><span class="label">Причина отмены:</span> {{ hospitalization.cancel_reason if hospitalization.cancel_reason else 'Не указана' }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

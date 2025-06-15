@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Лечебно-профилактические мероприятия
+{% endblock %}
+
+{% block head %}
+<style>
+    .treatment-container {
+        max-width: 1000px;
+        margin: 20px auto;
+        text-align: center;
+    }
+    .treatment-container h1 {
+        color: #007bff;
+        margin-bottom: 30px;
+    }
+    .treatment-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .treatment-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+    .treatment-card:hover {
+        transform: scale(1.05);
+        background-color: #f0f4f8; /* Светло-голубой при наведении */
+    }
+    .treatment-card h3 {
+        color: #007bff;
+        margin: 0 0 10px 0;
+    }
+    .treatment-card p {
+        margin: 5px 0;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="treatment-container">
+    <h1>Лечебно-профилактические мероприятия</h1>
+    <div class="treatment-list">
+        {% for treatment in med_procedures %}
+            <div class="treatment-card" onclick="window.location.href='/pages/med_procedures/{{ treatment.id }}'">
+                <h3>{{ treatment.name }}</h3>
+                <p>Врач: {{ treatment.doctors.last_name }} {{ treatment.doctors.first_name }}</p>
+                <p>Время: {{ treatment.datetime_measures.strftime('%d.%m.%Y %H:%M') }}</p>
+                <p>Кабинет: {{ treatment.cabinet.number_cabinet }} - {{ treatment.cabinet.name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

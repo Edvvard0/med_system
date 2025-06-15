@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}
+Добавить медицинскую процедуру
+{% endblock %}
+
+{% block head %}
+<style>
+    .add-procedure-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .add-procedure-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    .form-grid label {
+        display: block;
+        margin-bottom: 5px;
+        color: #007bff;
+        font-weight: bold;
+    }
+    .form-grid input, .form-grid select, .form-grid textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-grid textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    .submit-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="add-procedure-container">
+    <h1>Добавить медицинскую процедуру</h1>
+    <form id="addProcedureForm">
+        <div class="form-grid">
+            <div>
+                <label for="cabinet_id">Кабинет:</label>
+                <select id="cabinet_id" name="cabinet_id" required>
+                    <option value="">Выберите кабинет</option>
+                    {% for cabinet in cabinets %}
+                        <option value="{{ cabinet.id }}">{{ cabinet.number }} - {{ cabinet.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="datetime_measures">Дата и время процедуры:</label>
+                <input type="datetime-local" id="datetime_measures" name="datetime_measures" required>
+            </div>
+            <div>
+                <label for="type_procedure">Тип процедуры:</label>
+                <select id="type_procedure" name="type_procedure" required>
+                    <option value="лабораторное исследование">Лабораторное исследование</option>
+                    <option value="инструментальная диагностика">Инструментальная диагностика</option>
+                    <option value="лекарственная терапия">Лекарственная терапия</option>
+                    <option value="физиотерапия">Физиотерапия</option>
+                    <option value="хирургическое лечение">Хирургическое лечение</option>
+                </select>
+            </div>
+            <div>
+                <label for="name_measures">Название процедуры:</label>
+                <input type="text" id="name_measures" name="name_measures" required>
+            </div>
+            <div>
+                <label for="result">Результат:</label>
+                <textarea id="result" name="result" required></textarea>
+            </div>
+            <div>
+                <label for="recommendations">Рекомендации:</label>
+                <textarea id="recommendations" name="recommendations" required></textarea>
+            </div>
+        </div>
+        <button type="submit" class="submit-button">Добавить</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Получаем patient_id из пути (например, /pages/med_procedure/add/{patient_id})
+    const patientId = window.location.pathname.split('/').pop();
+
+    // Обработка отправки формы
+    document.getElementById('addProcedureForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const procedureData = {};
+        for (const [key, value] of formData.entries()) {
+            procedureData[key] = value;
+        }
+
+        try {
+            const response = await fetch(`/med_procedure/patient/${patientId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(procedureData)
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Ошибка при добавлении процедуры');
+            }
+
+            alert('Медицинская процедура успешно добавлена!');
+            window.location.href = `/pages/patients/${patientId}`; // Перенаправление
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}

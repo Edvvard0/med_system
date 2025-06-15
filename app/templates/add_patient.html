@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}
+Добавить пациента
+{% endblock %}
+
+{% block head %}
+<style>
+    .add-patient-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .add-patient-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    .form-grid label {
+        display: block;
+        margin-bottom: 5px;
+        color: #007bff;
+        font-weight: bold;
+    }
+    .form-grid input, .form-grid select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-grid input[type="file"] {
+        padding: 3px;
+    }
+    .submit-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="add-patient-container">
+    <h1>Добавить пациента</h1>
+    <form id="addPatientForm" enctype="multipart/form-data">
+        <div class="form-grid">
+            <div>
+                <label for="first_name">Имя:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div>
+                <label for="last_name">Фамилия:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div>
+                <label for="middle_name">Отчество:</label>
+                <input type="text" id="middle_name" name="middle_name">
+            </div>
+            <div>
+                <label for="date_birthday">Дата рождения:</label>
+                <input type="date" id="date_birthday" name="date_birthday" required>
+            </div>
+            <div>
+                <label for="passport">Паспорт:</label>
+                <input type="text" id="passport" name="passport" required>
+            </div>
+            <div>
+                <label for="gender">Пол:</label>
+                <select id="gender" name="gender" required>
+                    <option value="man">Мужской</option>
+                    <option value="woman">Женский</option>
+                </select>
+            </div>
+            <div>
+                <label for="address">Адрес:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div>
+                <label for="phone_number">Телефон:</label>
+                <input type="text" id="phone_number" name="phone_number" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="date_issue">Дата выдачи мед. карты:</label>
+                <input type="date" id="date_issue" name="date_issue" required>
+            </div>
+            <div>
+                <label for="date_last_request">Дата последнего визита:</label>
+                <input type="datetime-local" id="date_last_request" name="date_last_request" required>
+            </div>
+            <div>
+                <label for="date_next_visit">Дата следующего визита:</label>
+                <input type="datetime-local" id="date_next_visit" name="date_next_visit" required>
+            </div>
+            <div>
+                <label for="number_insurance_policy">Номер страхового полиса:</label>
+                <input type="text" id="number_insurance_policy" name="number_insurance_policy">
+            </div>
+            <div>
+                <label for="date_expiration">Дата истечения полиса:</label>
+                <input type="date" id="date_expiration" name="date_expiration">
+            </div>
+            <div>
+                <label for="diagnosis">Диагноз:</label>
+                <input type="text" id="diagnosis" name="diagnosis">
+            </div>
+              <div>
+                <label for="insurance_company">Страховая компания:</label>
+                <input type="text" id="insurance_company" name="insurance_company">
+            </div>
+            <div>
+                <label for="photo">Фото:</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+        </div>
+        <button type="submit" class="submit-button">Добавить</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById("addPatientForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        // Собираем данные формы
+        const formData = new FormData(this);
+        const patientData = {};
+        for (const [key, value] of formData.entries()) {
+            if (key !== "photo") {
+                patientData[key] = value;
+            }
+        }
+
+        // Первый запрос: добавление пациента
+        try {
+            const response = await fetch("/patients/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(patientData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || "Ошибка при добавлении пациента");
+            }
+
+
+            const result = await response.json();
+            const patientId = result.id;  // Предполагаем, что сервер возвращает id в ответе
+
+            // Второй запрос: загрузка фото, если оно есть
+            const photoFile = formData.get("photo");
+            if (photoFile && photoFile.size > 0) {
+                const photoFormData = new FormData();
+                photoFormData.append("uploaded_file", photoFile);
+
+                const photoResponse = await fetch(`/patients/upload_photo/${patientId}`, {
+                    method: "POST",
+                    body: photoFormData
+                });
+
+                const qrResponse = await fetch(`/patients/qr_code/${patientId}`, {
+                method: "GET",
+                });
+
+                if (!photoResponse.ok) {
+                    const photoErrorData = await photoResponse.json();
+                    throw new Error(photoErrorData.detail || "Ошибка при загрузке фото");
+                }
+
+                if (!qrResponse.ok) {
+                const photoErrorData = await photoResponse.json();
+                throw new Error(photoErrorData.detail || "Ошибка при созаднии qr_cod");
+                }
+            }
+
+            alert("Пациент успешно добавлен!");
+            window.location.href = `/pages/patients/${patientId}`;  // Перенаправление после успеха
+        } catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка: " + error.message);
+        }
+    });
+</script>
+{% endblock %}

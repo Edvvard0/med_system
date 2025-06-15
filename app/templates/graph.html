@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}
+Медицинские процедуры пациента
+{% endblock %}
+
+{% block head %}
+<style>
+    .procedures-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .procedures-container h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .timeline-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .timeline {
+        position: relative;
+        height: 120px;
+        border-left: 2px solid #007bff;
+        background-color: #f9f9f9;
+        overflow-x: hidden; /* убрали прокрутку */
+    }
+
+    .procedure-rect {
+        position: absolute;
+        width: 20px;  /* увеличили */
+        height: 20px; /* увеличили */
+        background-color: #007bff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        top: 40px;
+    }
+
+    .procedure-rect:hover {
+        background-color: #0056b3;
+    }
+
+    .tooltip {
+        visibility: hidden;
+        position: absolute;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 10;
+        white-space: nowrap;
+        pointer-events: none;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .procedure-rect:hover .tooltip {
+        visibility: visible;
+    }
+
+    .timeline-labels {
+        position: relative;
+        height: 20px;
+        margin-top: 10px;
+    }
+
+    .timeline-label {
+        position: absolute;
+        bottom: 0;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="procedures-container">
+    <h1>Медицинские процедуры пациента</h1>
+    <br>
+    <div class="timeline-wrapper">
+        <div class="timeline">
+            {% for procedure in med_procedures %}
+                {% set datetime = procedure.datetime_measures.strftime('%Y-%m-%d %H:%M') %}
+                {% set step = 100 / (med_procedures | length + 4) %}
+                {% set position = loop.index0 * step %}
+                <div class="procedure-rect"
+                     style="left: {{ position }}%;"
+                     data-id="{{ procedure.id }}"
+                     onmouseover="showTooltip(this)"
+                     onmouseout="hideTooltip(this)"
+                     onclick="window.location.href = '/pages/med_procedures/{{ procedure.id }}';">
+                    <div class="tooltip">{{ procedure.name_measures }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="timeline-labels">
+            {% for procedure in med_procedures %}
+                {% set datetime = procedure.datetime_measures.strftime('%Y-%m-%d') %}
+                {% set step = 100 / (med_procedures | length + 4) %}
+                {% set position = loop.index0 * step %}
+                <div class="timeline-label" style="left: {{ position }}%;">{{ datetime }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function showTooltip(element) {
+        const tooltip = element.querySelector('.tooltip');
+        tooltip.style.visibility = 'visible';
+        updateTooltipPosition(element, tooltip);
+    }
+
+    function hideTooltip(element) {
+        const tooltip = element.querySelector('.tooltip');
+        tooltip.style.visibility = 'hidden';
+    }
+
+    function updateTooltipPosition(element, tooltip) {
+        const rect = element.getBoundingClientRect();
+        tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+        tooltip.style.top = (rect.top + window.scrollY - 35) + 'px';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const rects = document.querySelectorAll('.procedure-rect');
+        rects.forEach(rect => {
+            rect.addEventListener('mousemove', function(e) {
+                const tooltip = rect.querySelector('.tooltip');
+                updateTooltipPosition(rect, tooltip);
+            });
+        });
+
+        const timeline = document.querySelector('.timeline');
+        timeline.addEventListener('scroll', function() {
+            const rects = document.querySelectorAll('.procedure-rect');
+            rects.forEach(rect => {
+                const tooltip = rect.querySelector('.tooltip');
+                if (tooltip.style.visibility === 'visible') {
+                    updateTooltipPosition(rect, tooltip);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

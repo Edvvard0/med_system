@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+Вход в систему
+{% endblock %}
+
+{% block head %}
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vh; /* Высота для центрирования по вертикали */
+    }
+    .login-form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+    .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .login-form button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .login-form button:hover {
+        background-color: #0056b3; /* Темнее при наведении */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+<div class="container">
+    <h1>Войти</h1>
+    <form id="login-form" class="registration-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        {% if role == "patient" %}
+            <button type="submit" id="login-button" class="submit-button" onclick="loginFunction(event)">Войти</button>
+        {% elif role == "doctor" %}
+            <button type="submit" id="login-button" class="submit-button" onclick="loginFunctionDoc(event)">Войти</button>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Подключаем внешний JavaScript-файл -->
+<script src="/static/js/script.js"></script>
+</body>
+</div>
+{% endblock %}

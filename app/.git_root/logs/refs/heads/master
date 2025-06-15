@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 e89cad39140fa2bcebf70bb9c43d351ae48b767d Edvvard0 <edward.osipchukzzz@gmail.com> 1749744458 +0300	commit (initial): Initial commit
+e89cad39140fa2bcebf70bb9c43d351ae48b767d e87641b564e26ad2abe0270f55980dbd263d4041 Edvvard0 <edward.osipchukzzz@gmail.com> 1749890846 +0300	commit: add task session 2
+e87641b564e26ad2abe0270f55980dbd263d4041 9404fd342214183b2fc28bf80b2747ecda180883 Edvvard0 <edward.osipchukzzz@gmail.com> 1749891155 +0300	commit: add func upload_file_med_procedure
+9404fd342214183b2fc28bf80b2747ecda180883 84e172fa594077b5023d6ede8b0770fa65efae2c Edvvard0 <edward.osipchukzzz@gmail.com> 1749896482 +0300	commit: add endpoints for voice and docx files
+84e172fa594077b5023d6ede8b0770fa65efae2c c9d563a23899727acdc1451daf70b21dc2fa3c9f Edvvard0 <edward.osipchukzzz@gmail.com> 1749903590 +0300	commit: add graph
+c9d563a23899727acdc1451daf70b21dc2fa3c9f ac7f7935435d79b48045d78ee48605f6d18dde58 Edvvard0 <edward.osipchukzzz@gmail.com> 1749905894 +0300	commit: add download med_card patient
+ac7f7935435d79b48045d78ee48605f6d18dde58 a8e2da0188a73d16a0e64e59820ecba91a980160 Edvvard0 <edward.osipchukzzz@gmail.com> 1749988985 +0300	commit: add tables for session 4
+a8e2da0188a73d16a0e64e59820ecba91a980160 2501b2fc7ad1c8c81350c012feeab77a3c69a286 Edvvard0 <edward.osipchukzzz@gmail.com> 1749997027 +0300	commit: add docx and migration on postgresql
+2501b2fc7ad1c8c81350c012feeab77a3c69a286 409ed312097b9b08c958100071fc71af9db2fd09 Edvvard0 <edward.osipchukzzz@gmail.com> 1749997458 +0300	commit: applied ruff

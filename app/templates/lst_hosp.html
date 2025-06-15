@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Список госпитализаций
+{% endblock %}
+
+{% block head %}
+<style>
+    .hospitalizations-container {
+        max-width: 1000px;
+        margin: 20px auto;
+        text-align: center;
+    }
+    .hospitalizations-container h1 {
+        color: #007bff;
+        margin-bottom: 30px;
+    }
+    .hospitalization-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .hospitalization-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+    .hospitalization-card:hover {
+        transform: scale(1.05);
+        background-color: #f0f4f8; /* Светло-голубой при наведении */
+    }
+    .hospitalization-card p {
+        margin: 10px 0;
+        color: #333;
+    }
+    .hospitalization-card .id {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hospitalizations-container">
+    <h1>Список госпитализаций</h1>
+    <div class="hospitalization-list">
+        {% for hospitalization in hospitalizations %}
+            <div class="hospitalization-card" onclick="window.location.href='/pages/hospitalizations/{{ hospitalization.id }}'">
+                <p class="id">ID: {{ hospitalization.id.hex[:10] }}</p>
+                <p>Пациент: {{ hospitalization.patients.last_name }} {{ hospitalization.patients.first_name }}</p>
+                <p>Цель: {{ hospitalization.purpose }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

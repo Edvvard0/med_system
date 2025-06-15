@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+Главная страница доктора
+{% endblock %}
+
+{% block head %}
+<style>
+    .doctor-header {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .doctor-header h2 {
+        color: #007bff;
+        margin: 0;
+    }
+    .doctor-header p {
+        margin: 5px 0;
+        color: #333;
+    }
+    .doctor-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin: 40px auto;
+        max-width: 800px;
+    }
+    .doctor-actions button {
+        background-color: #007bff;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.2s;
+    }
+    .doctor-actions button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="doctor-header">
+    <h2>{{ doctor.first_name }} {{ doctor.last_name }} {{ doctor.middle_name }}</h2>
+    <p>Специализация: {{ doctor.specialty }}</p>
+    <p>Email: {{ doctor.email }}</p>
+</div>
+
+<div class="doctor-actions">
+    <button onclick="window.location.href='/pages/hospitalizations'">Госпитализации</button>
+    <button onclick="window.location.href='/pages/med_procedures'">Лечебно-профилактические мероприятия</button>
+    <button onclick="window.location.href='/pages/patients'">Список пользователей</button>
+    <button onclick="window.location.href='/pages/patients/add'">Добавить пользователя</button>
+<!--    <button onclick="window.location.href='/pages/doctors/search'">Поиск</button>-->
+</div>
+{% endblock %}
